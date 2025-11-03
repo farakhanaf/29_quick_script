@@ -83,21 +83,21 @@ echo === Technician Menu ===
 echo 1. Power Options                [Ready]
 echo 2. System and Hardware Tools    [Development]
 echo 3. Maintenance                  [Quick Light Cleaning]
-echo 4. Admin Tools                  [Advanced Technical Settings]
-echo 5. View Activity Log            [DISABLED]
+echo 4. Admin Tools                  [Development]
+echo 5. View Activity Log            [CURRENTLY DISABLED]
 echo.
 echo === Technical Menu ===
-echo 6. Network Tools
-echo 7. Developer Tools              [Backend / Programming Work]
-echo 8. Remote Support Tools         [NEW]
-echo 9. Security Hardening           [NEW]
-echo 10. Performance Monitor         [NEW]
+echo 6. Network Tools		[Development]
+echo 7. Developer Tools              [Development]
+echo 8. Remote Support Tools         [Development]
+echo 9. Security Hardening           [Development]
+echo 10. Performance Monitor         [Development]
 echo.
 echo === Advanced Menu ===
-echo 11. Backup and Recovery           [NEW]
-echo 12. Cloud and API Tools           [NEW]
-echo 13. Automated Diagnostics       [NEW]
-echo 14. Configuration Manager       [NEW]
+echo 11. Backup and Recovery           [Development]
+echo 12. Cloud and API Tools           [Development]
+echo 13. Automated Diagnostics         [Development]
+echo 14. Configuration Manager         [Development]
 echo.
 echo x. Exit
 echo ?. Info and Statistics
