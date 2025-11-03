@@ -12,12 +12,12 @@ setlocal enabledelayedexpansion
 :ADMIN_CHECK
 net session >nul 2>&1
 if %errorlevel% neq 0 (
-    echo Membutuhkan hak Administrator. Membuka ulang dengan elevation...
-    echo Jika ditampilkan prompt UAC, pilih YES untuk run sebagai Administrator.
-    echo.
-    echo Jika memilih NO, aplikasi akan tetap berjalan dengan fitur terbatas.
-    echo.
-    pause
+    @REM echo Membutuhkan hak Administrator. Membuka ulang dengan elevation...
+    @REM echo Jika ditampilkan prompt UAC, pilih YES untuk run sebagai Administrator.
+    @REM echo.
+    @REM echo Jika memilih NO, aplikasi akan tetap berjalan dengan fitur terbatas.
+    @REM echo.
+    @REM pause
     powershell -Command "Start-Process -FilePath '%~f0' -Verb RunAs" >nul 2>&1
     if errorlevel 1 (
         echo.
@@ -30,45 +30,45 @@ if %errorlevel% neq 0 (
     )
 )
 
-:: ======================================
-:: SIMPLE ACCESS CODE LOGIN
-:: ======================================
-:LOGIN_ADV
-cls
-echo.
-echo            ==========================================
-echo            I      29 SOLUTIONS QUICK SCRIPT        I
-echo            I                v1.15                  I
-echo            ==========================================
-echo.
-echo                   [ AUTHENTICATION REQUIRED ]
-echo.
-echo.
+@REM :: ======================================
+@REM :: SIMPLE ACCESS CODE LOGIN
+@REM :: ======================================
+@REM :LOGIN_ADV
+@REM cls
+@REM echo.
+@REM echo            ==========================================
+@REM echo            I      29 SOLUTIONS QUICK SCRIPT        I
+@REM echo            I                v1.15                  I
+@REM echo            ==========================================
+@REM echo.
+@REM echo                   [ AUTHENTICATION REQUIRED ]
+@REM echo.
+@REM echo.
 
-:: Use PowerShell for secure password input
-set "access_code="
-echo                       Enter Access Code
-for /f "delims=" %%i in ('powershell -Command "$password = Read-Host -AsSecureString ('                      '); $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password); [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)" 2^>nul') do set "access_code=%%i"
+@REM :: Use PowerShell for secure password input
+@REM set "access_code="
+@REM echo                       Enter Access Code
+@REM for /f "delims=" %%i in ('powershell -Command "$password = Read-Host -AsSecureString ('                      '); $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password); [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)" 2^>nul') do set "access_code=%%i"
 
-if "%access_code%"=="" (
-    echo.
-    echo ERROR: Access code tidak boleh kosong!
-    timeout /t 2 >nul
-    goto LOGIN_ADV
-)
+@REM if "%access_code%"=="" (
+@REM     echo.
+@REM     echo ERROR: Access code tidak boleh kosong!
+@REM     timeout /t 2 >nul
+@REM     goto LOGIN_ADV
+@REM )
 
-if "%access_code%"=="ketauaneuy" (
-    echo.
-    echo                     [Access Code Verified]
-    set "LOGIN_STATUS=SUCCESS"
-    timeout /t 2 >nul
-    goto MAIN_MENU
-) else (
-    echo.
-    echo                     ERROR: Access code salah!
-    timeout /t 2 >nul
-    goto LOGIN_ADV
-)
+@REM if "%access_code%"=="ketauaneuy" (
+@REM     echo.
+@REM     echo                     [Access Code Verified]
+@REM     set "LOGIN_STATUS=SUCCESS"
+@REM     timeout /t 1 >nul
+@REM     goto MAIN_MENU
+@REM ) else (
+@REM     echo.
+@REM     echo                     ERROR: Access code salah!
+@REM     timeout /t 2 >nul
+@REM     goto LOGIN_ADV
+@REM )
 
 :: ======================================
 :: MAIN MENU - ENHANCED
@@ -99,9 +99,9 @@ echo 12. Cloud and API Tools           [Development]
 echo 13. Automated Diagnostics         [Development]
 echo 14. Configuration Manager         [Development]
 echo.
-echo x. Exit
 echo ?. Info and Statistics
-echo L. Logout
+echo q. Quit Session
+echo x. Exit Script
 echo.
 set /p menu="Pilih menu (1-14): "
 
@@ -121,16 +121,16 @@ if "%menu%"=="13" goto DIAGNOSTICS_MENU
 if "%menu%"=="14" goto CONFIG_MENU
 if "%menu%"=="x" goto EXIT
 if "%menu%"=="?" goto INFO_STATS
-if /i "%menu%"=="L" goto LOGOUT
+if /i "%menu%"=="q" goto LOGOUT
 goto MAIN_MENU
 
 :: ======================================
-:: LOGOUT FUNCTION
+:: EXIT SESSION FUNCTION
 :: ======================================
 :LOGOUT
 set "LOGIN_STATUS="
 echo.
-echo Logout berhasil!
+echo Exit Current Session
 timeout /t 2 >nul
 goto LOGIN_ADV
 
@@ -490,11 +490,11 @@ pause
 goto SYSTEM_MENU
 
 :: ======================================
-:: EXIT
+:: EXIT SCRIPT
 :: ======================================
 :EXIT
-cls
-echo.
-echo Ciao %USERNAME%
-timeout /t 2 >nul
+@REM cls
+@REM echo.
+@REM echo Ciao %USERNAME%
+@REM timeout /t 2 >nul
 exit
