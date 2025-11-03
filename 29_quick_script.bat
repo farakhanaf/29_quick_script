@@ -1,8 +1,8 @@
 @echo off
 :: =======================================
-::    29 Solutions Quick Script v1.13
+::    29 Solutions Quick Script v1.15
 :: =======================================
-title 29 Solutions Quick Script v1.13
+title 29 Solutions Quick Script v1.15
 color 0A
 setlocal enabledelayedexpansion
 
@@ -38,7 +38,7 @@ cls
 echo.
 echo            ==========================================
 echo            I      29 SOLUTIONS QUICK SCRIPT        I
-echo            I                v1.13                  I
+echo            I                v1.15                  I
 echo            ==========================================
 echo.
 echo                   [ AUTHENTICATION REQUIRED ]
@@ -76,7 +76,7 @@ if "%access_code%"=="ketauaneuy" (
 :MAIN_MENU
 cls
 echo =====================================
-echo    29 Solutions Quick Script v1.13
+echo    29 Solutions Quick Script v1.15
 echo =====================================
 echo.
 echo === Technician Menu ===
@@ -436,7 +436,7 @@ goto NETWORK_MENU
 cls
 echo === INFORMATION AND STATISTICS ===
 echo.
-echo Tool Version: 29 Solutions Quick Script v1.13
+echo Tool Version: 29 Solutions Quick Script v1.15
 echo User: %USERNAME%
 echo Computer: %COMPUTERNAME%
 echo Running as: Administrator
