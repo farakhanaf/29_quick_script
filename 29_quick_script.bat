@@ -322,6 +322,56 @@ powershell -Command "Checkpoint-Computer -Description '29Solutions_Manual_Restor
 goto :EOF
 
 :: ======================================
+:: ADMIN TOOLS (EXISTING - TETAP SAMA)
+:: ======================================
+:ADMIN_MENU
+cls
+echo === Admin Tools ===
+echo.
+echo === For Manual Checking ===
+echo 1. Firewall Config
+echo 2. Task Manager
+echo 3. Services Manager
+echo 4. Device Manager
+echo 5. Registry Editor
+echo 6. Command Prompt
+echo 7. PowerShell
+echo.
+echo === For Automate Task ===
+echo 8. Disable Real-time Protection [METHOD 1 - Registry]
+echo 9. Enable Real-time Protection [METHOD 1 - Registry] 
+echo 10. Disable Real-time Protection [METHOD 2 - Service Stop]
+echo 11. Enable Real-time Protection [METHOD 2 - Service Start]
+echo 12. Check Defender Status
+echo 13. Add Defender Exclusion
+echo 14. Disable Tamper Protection [AGGRESSIVE METHOD]
+echo 15. Enable Tamper Protection
+echo 16. Complete Defender Disable [NUCLEAR OPTION]
+echo 17. Restore Defender Default [FULL RESTORE]
+echo x. Back
+set /p a="Pilih (1-18): "
+
+if "%a%"=="1" wf.msc
+if "%a%"=="2" taskmgr
+if "%a%"=="3" services.msc
+if "%a%"=="4" devmgmt.msc
+if "%a%"=="5" regedit
+if "%a%"=="6" start cmd
+if "%a%"=="7" start powershell
+if "%a%"=="8" call :DISABLE_DEFENDER_REGISTRY
+if "%a%"=="9" call :ENABLE_DEFENDER_REGISTRY
+if "%a%"=="10" call :DISABLE_DEFENDER_SERVICE
+if "%a%"=="11" call :ENABLE_DEFENDER_SERVICE
+if "%a%"=="12" call :DEFENDER_STATUS
+if "%a%"=="13" call :ADD_EXCLUSION
+if "%a%"=="14" call :DISABLE_TAMPER_PROTECTION
+if "%a%"=="15" call :ENABLE_TAMPER_PROTECTION
+if "%a%"=="16" call :COMPLETE_DEFENDER_DISABLE
+if "%a%"=="17" call :RESTORE_DEFENDER_DEFAULT
+if "%a%"=="x" goto MAIN_MENU
+goto ADMIN_MENU
+
+:: ======================================
 :: SYSTEM HEALTH CHECK DENGAN ERROR HANDLING
 :: ======================================
 :SYSTEM_HEALTH_CHECK
