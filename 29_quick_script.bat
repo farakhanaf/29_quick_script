@@ -30,45 +30,45 @@ if %errorlevel% neq 0 (
     )
 )
 
-@REM :: ======================================
-@REM :: SIMPLE ACCESS CODE LOGIN
-@REM :: ======================================
-@REM :LOGIN_ADV
-@REM cls
-@REM echo.
-@REM echo            ==========================================
-@REM echo            I      29 SOLUTIONS QUICK SCRIPT        I
-@REM echo            I                v1.15                  I
-@REM echo            ==========================================
-@REM echo.
-@REM echo                   [ AUTHENTICATION REQUIRED ]
-@REM echo.
-@REM echo.
+:: ======================================
+:: SIMPLE ACCESS CODE LOGIN
+:: ======================================
+:LOGIN_ADV
+cls
+echo.
+echo            ==========================================
+echo            I      29 SOLUTIONS QUICK SCRIPT        I
+echo            I                v1.15                  I
+echo            ==========================================
+echo.
+echo                   [ AUTHENTICATION REQUIRED ]
+echo.
+echo.
 
-@REM :: Use PowerShell for secure password input
-@REM set "access_code="
-@REM echo                       Enter Access Code
-@REM for /f "delims=" %%i in ('powershell -Command "$password = Read-Host -AsSecureString ('                      '); $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password); [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)" 2^>nul') do set "access_code=%%i"
+:: Use PowerShell for secure password input
+set "access_code="
+echo                       Enter Access Code
+for /f "delims=" %%i in ('powershell -Command "$password = Read-Host -AsSecureString ('                      '); $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password); [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)" 2^>nul') do set "access_code=%%i"
 
-@REM if "%access_code%"=="" (
-@REM     echo.
-@REM     echo ERROR: Access code tidak boleh kosong!
-@REM     timeout /t 2 >nul
-@REM     goto LOGIN_ADV
-@REM )
+if "%access_code%"=="" (
+    echo.
+    echo ERROR: Access code tidak boleh kosong!
+    timeout /t 2 >nul
+    goto LOGIN_ADV
+)
 
-@REM if "%access_code%"=="ketauaneuy" (
-@REM     echo.
-@REM     echo                     [Access Code Verified]
-@REM     set "LOGIN_STATUS=SUCCESS"
-@REM     timeout /t 1 >nul
-@REM     goto MAIN_MENU
-@REM ) else (
-@REM     echo.
-@REM     echo                     ERROR: Access code salah!
-@REM     timeout /t 2 >nul
-@REM     goto LOGIN_ADV
-@REM )
+if "%access_code%"=="ketauaneuy" (
+    echo.
+    echo                     [Access Code Verified]
+    set "LOGIN_STATUS=SUCCESS"
+    timeout /t 1 >nul
+    goto MAIN_MENU
+) else (
+    echo.
+    echo                     ERROR: Access code salah!
+    timeout /t 2 >nul
+    goto LOGIN_ADV
+)
 
 :: ======================================
 :: MAIN MENU - ENHANCED
@@ -81,13 +81,13 @@ echo =====================================
 echo.
 echo === Technician Menu ===
 echo 1. Power Options                [Ready]
-echo 2. System and Hardware Tools    [Development]
-echo 3. Maintenance                  [Quick Light Cleaning]
-echo 4. Admin Tools                  [Development]
+echo 2. System and Hardware Tools    [Ready]
+echo 3. Maintenance                  [Ready]
+echo 4. Admin Tools                  [Ready]
 echo 5. View Activity Log            [CURRENTLY DISABLED]
 echo.
 echo === Technical Menu ===
-echo 6. Network Tools		[Development]
+echo 6. Network Tools		[Ready]
 echo 7. Developer Tools              [Development]
 echo 8. Remote Support Tools         [Development]
 echo 9. Security Hardening           [Development]
@@ -129,8 +129,10 @@ goto MAIN_MENU
 :: ======================================
 :LOGOUT
 set "LOGIN_STATUS="
+cls
 echo.
-echo Exit Current Session
+echo.
+echo                [ Exit Current Session ] 
 timeout /t 2 >nul
 goto LOGIN_ADV
 
@@ -370,6 +372,48 @@ if "%a%"=="16" call :COMPLETE_DEFENDER_DISABLE
 if "%a%"=="17" call :RESTORE_DEFENDER_DEFAULT
 if "%a%"=="x" goto MAIN_MENU
 goto ADMIN_MENU
+
+:: ======================================
+:: NETWORK TOOLS (ENHANCED)
+:: ======================================
+:NETWORK_MENU
+cls
+echo === Network Tools ===
+echo 1. Tes Koneksi Internet
+echo 2. Lihat IP Config
+echo 3. Ping Gateway
+echo 4. Flush DNS
+echo 5. Reset Network
+echo 6. Port Scanner                [NEW]
+echo 7. Bandwidth Monitor           [NEW]
+echo 8. Network Statistics          [NEW]
+echo 9. WiFi Password Extractor     [NEW]
+echo 10. Hosts File Editor          [NEW]
+echo x. Back
+set /p n="Pilih (1-11): "
+
+if "%n%"=="1" (
+    ping 8.8.8.8 -n 1 && echo Koneksi OK || echo Tidak ada koneksi!
+    call :LOG "Internet Test" "SUCCESS" "Ping 8.8.8.8"
+)
+if "%n%"=="2" (
+    ipconfig /all | more
+    call :LOG "IP Config" "SUCCESS" "Network configuration"
+)
+if "%n%"=="3" (
+    for /f "tokens=3" %%A in ('netsh interface ipv4 show config ^| find "Default Gateway"') do ping %%A
+    call :LOG "Ping Gateway" "SUCCESS" "Gateway connectivity"
+)
+if "%n%"=="4" call :CONFIRM_ACTION "Flush DNS" "ipconfig /flushdns"
+if "%n%"=="5" call :CONFIRM_ACTION "Reset Network" "netsh winsock reset && netsh int ip reset"
+if "%n%"=="6" call :PORT_SCANNER
+if "%n%"=="7" call :BANDWIDTH_MONITOR
+if "%n%"=="8" call :NETWORK_STATISTICS
+if "%n%"=="9" call :WIFI_PASSWORD_EXTRACTOR
+if "%n%"=="10" call :HOSTS_FILE_EDITOR
+if "%n%"=="x" goto MAIN_MENU
+pause
+goto NETWORK_MENU
 
 :: ======================================
 :: SYSTEM HEALTH CHECK DENGAN ERROR HANDLING
